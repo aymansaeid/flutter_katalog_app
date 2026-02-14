@@ -12,7 +12,7 @@ class DiscoverScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // Buraya tıklandığında ilerde Sepet sayfasına gideceğiz
+              
             }, 
             icon: const Icon(Icons.shopping_bag_outlined)
           )
@@ -39,7 +39,7 @@ class DiscoverScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               
-              // 2. Banner [cite: 76]
+              // 2. Banner 
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),

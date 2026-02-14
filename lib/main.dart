@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/discover_screen.dart';
+import 'screens/product_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // Uygulama açıldığında bizi Discover (Keşfet) ekranı karşılayacak
-      home: const DiscoverScreen(),
+      
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const DiscoverScreen(),
+        '/detail': (context) => const ProductDetailScreen(),
+      },
     );
   }
 }

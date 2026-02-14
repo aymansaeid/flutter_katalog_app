@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  // Bu widget'ı çağırdığımızda içine ürün adı, fiyatı ve görseli gönderebileceğiz
   final String title;
   final String price;
   final String imageUrl;
@@ -15,51 +14,63 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3, // Hafif gölge
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Üst Kısım: Ürün Görseli
-          Expanded( // Grid içinde taşma yapmaması için görseli sarmaladık
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-              child: Image.network(
-                imageUrl, 
-                width: double.infinity,
-                fit: BoxFit.cover,
-                // Görsel yüklenirken hata oluşursa siyah bir ikon gösterir
-                errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+    // InkWell: Tıklama efekti verir ve onTap fonksiyonunu çalıştırır
+    return InkWell(
+      onTap: () {
+        // Raporun "Navigator" ve "Route Arguments" isterlerini burada sağlıyoruz [cite: 103, 104]
+        Navigator.pushNamed(
+          context,
+          '/detail',
+          arguments: {
+            'title': title,
+            'price': price,
+            'imageUrl': imageUrl,
+          },
+        );
+      },
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                child: Image.network(
+                  imageUrl,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+                ),
               ),
             ),
-          ),
-          // Alt Kısım: Ürün Bilgileri
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  maxLines: 1, // Uzun isimleri keser
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "\$$price",
-                      style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
-                    ),
-                    const Icon(Icons.add_circle, size: 20),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "\$$price",
+                        style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                      ),
+                      const Icon(Icons.add_circle, size: 20),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
