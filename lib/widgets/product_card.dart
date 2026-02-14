@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
+import '../models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  final String title;
-  final String price;
-  final String imageUrl;
+  final Product product;
 
-  const ProductCard({
-    super.key,
-    required this.title,
-    required this.price,
-    required this.imageUrl,
-  });
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    // InkWell: Tıklama efekti verir ve onTap fonksiyonunu çalıştırır
     return InkWell(
       onTap: () {
-        // Raporun "Navigator" ve "Route Arguments" isterlerini burada sağlıyoruz [cite: 103, 104]
+        // Tıklanan ürünün tüm objesini detay sayfasına argüman olarak gönderiyoruz
         Navigator.pushNamed(
           context,
           '/detail',
-          arguments: {
-            'title': title,
-            'price': price,
-            'imageUrl': imageUrl,
-          },
+          arguments: product,
         );
       },
       child: Card(
@@ -38,7 +27,7 @@ class ProductCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                 child: Image.network(
-                  imageUrl,
+                  product.imageUrl,
                   width: double.infinity,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
@@ -51,7 +40,7 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    product.title,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -60,7 +49,7 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "\$$price",
+                        "\$${product.price}",
                         style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
                       ),
                       const Icon(Icons.add_circle, size: 20),
