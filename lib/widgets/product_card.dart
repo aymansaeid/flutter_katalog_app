@@ -3,20 +3,18 @@ import '../models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
+  final VoidCallback onTap; // YENİ: Tıklama işlemini dışarıdan alacağız
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({
+    super.key, 
+    required this.product, 
+    required this.onTap
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // Tıklanan ürünün tüm objesini detay sayfasına argüman olarak gönderiyoruz
-        Navigator.pushNamed(
-          context,
-          '/detail',
-          arguments: product,
-        );
-      },
+      onTap: onTap, // Artık dışarıdan gelen fonksiyonu çalıştırıyor
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
